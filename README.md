@@ -54,7 +54,9 @@ flutter run
 
 ## Screenshots
 
-*(Screenshots section – add images here)*
+| Add Subject | Subject List | Summary |
+|---|---|---|
+| ![Add Subject](assets/screenshots/Screenshot_1782503848.png) | ![Subject List](assets/screenshots/Screenshot_1782503929.png) | ![Summary](assets/screenshots/Screenshot_1782503935.png) |
 
 ## Assignment Requirements Covered
 
