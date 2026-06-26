@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../utils/responsive.dart';
 
 class SummaryCard extends StatelessWidget {
   final String label;
@@ -18,6 +19,9 @@ class SummaryCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final effectiveColor = color ?? theme.colorScheme.primary;
+    final cardPadding = context.responsiveCardPadding;
+    final iconSize = context.responsiveValue(small: 24.0, medium: 28.0);
+    final iconContainer = context.responsiveValue(small: 48.0, medium: 56.0);
 
     return Card(
       elevation: 0,
@@ -26,19 +30,19 @@ class SummaryCard extends StatelessWidget {
         side: BorderSide(color: theme.colorScheme.outlineVariant),
       ),
       child: Padding(
-        padding: const EdgeInsets.all(20),
+        padding: EdgeInsets.all(cardPadding),
         child: Row(
           children: [
             Container(
-              width: 48,
-              height: 48,
+              width: iconContainer,
+              height: iconContainer,
               decoration: BoxDecoration(
                 color: effectiveColor.withValues(alpha: 0.15),
                 borderRadius: BorderRadius.circular(12),
               ),
-              child: Icon(icon, color: effectiveColor, size: 24),
+              child: Icon(icon, color: effectiveColor, size: iconSize),
             ),
-            const SizedBox(width: 16),
+            SizedBox(width: cardPadding),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,

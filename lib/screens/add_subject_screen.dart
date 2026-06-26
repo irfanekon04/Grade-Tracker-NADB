@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../models/subject.dart';
 import '../providers/subject_provider.dart';
+import '../utils/responsive.dart';
 import '../widgets/custom_text_field.dart';
 
 class AddSubjectScreen extends StatelessWidget {
@@ -30,72 +31,79 @@ class AddSubjectScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final padding = context.responsivePadding;
+    final iconSize = context.responsiveIconSize;
 
     return SingleChildScrollView(
-      padding: const EdgeInsets.all(24),
-      child: Form(
-        key: _formKey,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            const SizedBox(height: 20),
-            Icon(
-              Icons.school,
-              size: 64,
-              color: theme.colorScheme.primary,
+      padding: EdgeInsets.all(padding),
+      child: Center(
+        child: Container(
+          constraints: const BoxConstraints(maxWidth: 500),
+          child: Form(
+            key: _formKey,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                SizedBox(height: padding),
+                Icon(
+                  Icons.school,
+                  size: iconSize,
+                  color: theme.colorScheme.primary,
+                ),
+                const SizedBox(height: 16),
+                Text(
+                  'Add New Subject',
+                  textAlign: TextAlign.center,
+                  style: theme.textTheme.headlineSmall?.copyWith(
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  'Enter the subject name and marks obtained.',
+                  textAlign: TextAlign.center,
+                  style: theme.textTheme.bodyMedium?.copyWith(
+                    color: theme.colorScheme.onSurfaceVariant,
+                  ),
+                ),
+                SizedBox(height: padding + 8),
+                CustomTextField(
+                  controller: _nameController,
+                  label: 'Subject Name',
+                  validator: (value) {
+                    if (value == null || value.trim().isEmpty) {
+                      return 'Subject name cannot be empty';
+                    }
+                    return null;
+                  },
+                ),
+                const SizedBox(height: 20),
+                CustomTextField(
+                  controller: _marksController,
+                  label: 'Marks (0-100)',
+                  keyboardType: TextInputType.number,
+                  validator: (value) {
+                    if (value == null || value.trim().isEmpty) {
+                      return 'Marks cannot be empty';
+                    }
+                    final mark = double.tryParse(value.trim());
+                    if (mark == null) {
+                      return 'Marks must be a number';
+                    }
+                    if (mark < 0 || mark > 100) {
+                      return 'Marks must be between 0 and 100';
+                    }
+                    return null;
+                  },
+                ),
+                SizedBox(height: padding + 8),
+                ElevatedButton(
+                  onPressed: () => _submit(context),
+                  child: const Text('Add Subject'),
+                ),
+              ],
             ),
-            const SizedBox(height: 16),
-            Text(
-              'Add New Subject',
-              textAlign: TextAlign.center,
-              style: theme.textTheme.headlineSmall?.copyWith(
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            const SizedBox(height: 8),
-            Text(
-              'Enter the subject name and marks obtained.',
-              textAlign: TextAlign.center,
-              style: theme.textTheme.bodyMedium?.copyWith(
-                color: theme.colorScheme.onSurfaceVariant,
-              ),
-            ),
-            const SizedBox(height: 32),
-            CustomTextField(
-              controller: _nameController,
-              label: 'Subject Name',
-              validator: (value) {
-                if (value == null || value.trim().isEmpty) {
-                  return 'Subject name cannot be empty';
-                }
-                return null;
-              },
-            ),
-            const SizedBox(height: 20),
-            CustomTextField(
-              controller: _marksController,
-              label: 'Marks (0-100)',
-              keyboardType: TextInputType.number,
-              validator: (value) {
-                if (value == null || value.trim().isEmpty) {
-                  return 'Marks cannot be empty';
-                }
-                final mark = double.tryParse(value.trim());
-                if (mark == null) {
-                  return 'Marks must be a number';
-                }
-                if (mark < 0 || mark > 100) {
-                  return 'Marks must be between 0 and 100';
-                }
-                return null;
-              },
-            ),
-            const SizedBox(height: 32),
-            ElevatedButton(
-              onPressed: () => _submit(context),
-              child: const Text('Add Subject'),
-            ),
-          ],
+          ),
         ),
       ),
     );
