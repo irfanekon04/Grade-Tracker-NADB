@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/navigation_provider.dart';
 import '../providers/theme_provider.dart';
+import '../utils/responsive.dart';
 import 'add_subject_screen.dart';
 import 'subject_list_screen.dart';
 import 'summary_screen.dart';
@@ -17,11 +18,17 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isLandscape = !context.isPortrait;
+
     return Consumer<NavigationProvider>(
       builder: (context, navProvider, _) {
         return Scaffold(
           appBar: AppBar(
-            title: const Text('Student Grade Tracker'),
+            toolbarHeight: isLandscape ? 40 : null,
+            title: Text(
+              'Student Grade Tracker',
+              style: TextStyle(fontSize: isLandscape ? 16 : null),
+            ),
             actions: [
               IconButton(
                 icon: Icon(
@@ -40,6 +47,9 @@ class HomeScreen extends StatelessWidget {
           bottomNavigationBar: NavigationBar(
             selectedIndex: navProvider.currentIndex,
             onDestinationSelected: navProvider.setIndex,
+            labelBehavior: isLandscape
+                ? NavigationDestinationLabelBehavior.alwaysHide
+                : NavigationDestinationLabelBehavior.alwaysShow,
             destinations: const [
               NavigationDestination(
                 icon: Icon(Icons.add_circle_outline),
