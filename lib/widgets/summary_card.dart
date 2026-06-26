@@ -20,6 +20,11 @@ class SummaryCard extends StatelessWidget {
     final effectiveColor = color ?? theme.colorScheme.primary;
 
     return Card(
+      elevation: 0,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(16),
+        side: BorderSide(color: theme.colorScheme.outlineVariant),
+      ),
       child: Padding(
         padding: const EdgeInsets.all(20),
         child: Row(

@@ -6,18 +6,18 @@ class SubjectCard extends StatelessWidget {
 
   const SubjectCard({super.key, required this.subject});
 
-  Color _gradeColor(BuildContext context) {
+  Color _gradeColor(ColorScheme colorScheme) {
     switch (subject.grade) {
       case 'A':
-        return Colors.green;
+        return colorScheme.primary;
       case 'B':
-        return Colors.blue;
+        return colorScheme.secondary;
       case 'C':
-        return Colors.orange;
+        return colorScheme.tertiary;
       case 'F':
-        return Colors.red;
+        return colorScheme.error;
       default:
-        return Theme.of(context).colorScheme.onSurface;
+        return colorScheme.onSurface;
     }
   }
 
@@ -27,6 +27,11 @@ class SubjectCard extends StatelessWidget {
     final colorScheme = theme.colorScheme;
 
     return Card(
+      elevation: 0,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(16),
+        side: BorderSide(color: colorScheme.outlineVariant),
+      ),
       child: Padding(
         padding: const EdgeInsets.all(16),
         child: Row(
@@ -73,7 +78,7 @@ class SubjectCard extends StatelessWidget {
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
               decoration: BoxDecoration(
-                color: _gradeColor(context).withValues(alpha: 0.15),
+                color: _gradeColor(colorScheme).withValues(alpha: 0.15),
                 borderRadius: BorderRadius.circular(8),
               ),
               child: Text(
@@ -81,7 +86,7 @@ class SubjectCard extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
-                  color: _gradeColor(context),
+                  color: _gradeColor(colorScheme),
                 ),
               ),
             ),
