@@ -2,7 +2,7 @@ class Subject {
   final String name;
   double _mark;
 
-  Subject({required this.name, required double mark}) : _mark = mark;
+  Subject({required this.name, required this._mark});
 
   double get mark => _mark;
 
